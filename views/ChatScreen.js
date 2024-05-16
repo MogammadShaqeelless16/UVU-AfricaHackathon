@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import Navbar from '../components/Navbar';
 const ChatScreen = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -105,6 +105,7 @@ const ChatScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Navbar navigation={navigation} />
       <FlatList
         data={messages}
         renderItem={renderItem}
