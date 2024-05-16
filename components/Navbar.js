@@ -10,13 +10,22 @@ const menuItems = [
 
 const Navbar = ({ navigation }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for sidebar
 
   const handleMenuItemPress = (screen) => {
-    navigation.navigate(screen);
+    if (screen === 'Profile') {
+      toggleSidebar(); // Open sidebar for Profile
+    } else {
+      navigation.navigate(screen);
+    }
   };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
@@ -43,6 +52,20 @@ const Navbar = ({ navigation }) => {
             </TouchableOpacity>
           ))}
         </View>
+      )}
+
+      {/* Sidebar */}
+      {isSidebarOpen && (
+        <TouchableOpacity
+          style={styles.sidebar}
+          onPress={toggleSidebar} // Close sidebar when clicked outside
+          activeOpacity={1} // Prevents TouchableOpacity from becoming transparent
+        >
+          <View style={styles.sidebarContent}>
+            <Text style={styles.sidebarText}>Username: DummyUsername</Text>
+            <Text style={styles.sidebarText}>Points: 100</Text>
+          </View>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -85,6 +108,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  sidebar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: '100%', // Full width of the screen
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent background
+    zIndex: 1, // Ensure sidebar is above other content
+  },
+  sidebarContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20, // Adjust padding as needed
+    marginTop: Platform.OS === 'ios' ? 40 : 20, // Match navbar's top padding
+  },
+  sidebarText: {
+    color: '#fff',
+    fontSize: 18,
+    marginBottom: 10,
+  },
 });
+
 
 export default Navbar;

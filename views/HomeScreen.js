@@ -38,30 +38,35 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Navbar navigation={navigation} />
-      <SwipeCards
-        cards={posts}
-        renderCard={(post) => (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('PostDetails', { postId: post.id })}
-          >
-            <Text style={styles.title}>{post.title.rendered}</Text>
-            {post.featured_media && (
-              <a href={post.link} target="_blank" rel="noopener noreferrer">
-                <Image
-                  source={{ uri: post.featured_media.source_url }}
-                  style={styles.image}
-                />
-              </a>
-            )}
-          </TouchableOpacity>
-        )}
-        handleYup={handleYup}
-        handleNope={handleNope}
-        cardRemoved={() => {}}
-        stack={false}
-        loop={false}
-      />
+      <View style={styles.swipeCardsContainer}>
+        <SwipeCards
+          cards={posts}
+          renderCard={(post) => (
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => navigation.navigate('PostDetails', { postId: post.id })}
+            >
+              <Text style={styles.title}>{post.title.rendered}</Text>
+              {post.featured_media && (
+                <a href={post.link} target="_blank" rel="noopener noreferrer">
+                  <Image
+                    source={{ uri: post.featured_media.source_url }}
+                    style={styles.image}
+                  />
+                </a>
+              )}
+            </TouchableOpacity>
+          )}
+          handleYup={handleYup}
+          handleNope={handleNope}
+          cardRemoved={() => {}}
+          stack={false}
+          loop={false}
+        />
+      </View>
+      <View style={styles.pointsContainer}>
+        <Text style={styles.points}>Points: 50</Text>
+      </View>
     </View>
   );
 };
@@ -70,6 +75,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0fb5ce',
+  },
+  swipeCardsContainer: {
+    flex: 1,
   },
   card: {
     backgroundColor: '#fff',
@@ -89,6 +97,14 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     borderRadius: 10,
+  },
+  pointsContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  points: {
+    fontSize: 16,
+    color: '#555', // Adjust the color as needed
   },
 });
 
