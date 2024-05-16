@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Platform, StyleSheet, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-
+import React, { useState } from 'react';
 const menuItems = [
   { label: 'Profile', icon: 'user', screen: 'Profile' },
   { label: 'Home', icon: 'home', screen: 'Home' },
