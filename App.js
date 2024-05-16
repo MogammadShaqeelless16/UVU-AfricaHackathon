@@ -6,7 +6,7 @@ import HomeScreen from './views/HomeScreen';
 import ProfileScreen from './views/ProfileScreen';
 import MapScreen from './views/MapScreen';
 import SplashScreen from './views/SplashScreen'; // Import the SplashScreen component
-
+import ChatScreen from './views/ChatScreen';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -26,6 +26,7 @@ const App = () => {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
         </Stack.Navigator>
       ) : (
         <SplashScreen />
