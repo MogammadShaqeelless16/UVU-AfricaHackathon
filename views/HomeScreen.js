@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
@@ -46,7 +46,14 @@ const HomeScreen = () => {
             onPress={() => navigation.navigate('PostDetails', { postId: post.id })}
           >
             <Text style={styles.title}>{post.title.rendered}</Text>
-            {/* Add more content from the post if needed */}
+            {post.featured_media && (
+              <a href={post.link} target="_blank" rel="noopener noreferrer">
+                <Image
+                  source={{ uri: post.featured_media.source_url }}
+                  style={styles.image}
+                />
+              </a>
+            )}
           </TouchableOpacity>
         )}
         handleYup={handleYup}
@@ -76,6 +83,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 10,
   },
 });
 
