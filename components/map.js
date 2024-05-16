@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { WebView } from 'react-native-webview';
 
 // Leaflet imports for web
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -12,9 +11,10 @@ const Map = () => {
     return (
       <View style={styles.webContainer}>
         <MapContainer
-          style={{ height: "100%", width: "100%" }}
+          style={styles.webMap}
           center={[37.78825, -122.4324]}
           zoom={15}
+          scrollWheelZoom={false}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
   webContainer: {
     width: '100%',
     height: Dimensions.get('window').height,
+  },
+  webMap: {
+    height: '100%',
+    width: '100%',
   },
 });
 
