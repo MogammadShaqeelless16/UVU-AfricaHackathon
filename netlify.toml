@@ -1,0 +1,3 @@
+[build]
+  command = "cd DAT-A-CITY && npx expo build:web"
+  publish = "DAT-A-CITY/web-build"
