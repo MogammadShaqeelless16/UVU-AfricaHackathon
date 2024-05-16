@@ -21,7 +21,12 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "build": {
+        "packagerOpts": {
+          "config": "metro.config.js"
+        }
+      }
     }
   }
 }
