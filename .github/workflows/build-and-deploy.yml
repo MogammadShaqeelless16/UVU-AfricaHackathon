@@ -17,7 +17,7 @@ jobs:
         run: npm install
 
       - name: Build Expo project
-        run: npx expo build:web
+        run: npx expo export
 
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
