@@ -5,8 +5,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './views/HomeScreen';
 import ProfileScreen from './views/ProfileScreen';
 import MapScreen from './views/MapScreen';
-import SplashScreen from './views/SplashScreen'; // Import the SplashScreen component
+import SplashScreen from './views/SplashScreen';
 import ChatScreen from './views/ChatScreen';
+import LoginScreen from './views/LoginScreen'; // Import the LoginScreen component
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -22,7 +24,8 @@ const App = () => {
   return (
     <NavigationContainer>
       {isAppReady ? (
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
@@ -36,3 +39,4 @@ const App = () => {
 };
 
 export default App;
+
