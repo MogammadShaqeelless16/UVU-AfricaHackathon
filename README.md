@@ -48,3 +48,5 @@ DATACITY was developed by Shaqeel Less, Bafana Madume, Jason Blankenberg, Phindi
 ## License
 
 This app is licensed under [license]. See the LICENSE file for more details.
+![WhatsApp Image 2024-05-17 at 15 15 08](https://github.com/MogammadShaqeelless16/UVU-AfricaHackathon/assets/54390756/8844dc9e-2b98-4b0c-950e-9e3484b74afb)
+
