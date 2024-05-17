@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }) => {
   const [points, setPoints] = useState(50); // Initial points set to 50
   const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
   const [arrowsVisible, setArrowsVisible] = useState(true); // State for arrow visibility
-
+  const [selectedPost, setSelectedPost] = useState(null); // Selected post for modal content
   useEffect(() => {
     const fetchPosts = async () => {
       try {
