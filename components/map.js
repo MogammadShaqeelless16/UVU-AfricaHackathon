@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet, View, Dimensions } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
-// Leaflet imports for web
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { MapContainer, TileLayer, Marker as LeafletMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const Map = () => {
+  const [userLocation, setUserLocation] = useState({ latitude: 37.78825, longitude: -122.4324 });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }, []);
+
   if (Platform.OS === 'web') {
     return (
       <View style={styles.webContainer}>
         <MapContainer
           style={styles.webMap}
-          center={[37.78825, -122.4324]}
+          center={[userLocation.latitude, userLocation.longitude]}
           zoom={15}
           scrollWheelZoom={false}
         >
@@ -20,11 +38,11 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={[37.78825, -122.4324]}>
+          <LeafletMarker position={[userLocation.latitude, userLocation.longitude]}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              Your current location.
             </Popup>
-          </Marker>
+          </LeafletMarker>
         </MapContainer>
       </View>
     );
@@ -36,12 +54,18 @@ const Map = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        <Marker
+          coordinate={{ latitude: userLocation.latitude, longitude: userLocation.longitude }}
+          title="Your Location"
+          description="This is your current location"
+        />
+      </MapView>
     </View>
   );
 };
