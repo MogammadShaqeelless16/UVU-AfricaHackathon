@@ -5,7 +5,7 @@
 
 ## Introduction
 
-DATACITY is a gamification app designed to foster e-participation and public engagement within the City of Cape Town. Developed by [Your Name], this app serves as a platform for citizens to actively participate in shaping their city's future while enjoying a gamified experience.
+DATACITY is a gamification app designed to foster e-participation and public engagement within the City of Cape Town. Developed by Shaqeel Less, Bafana Madume, Jason Blankenberg, Phindile Dhlamini and Kopano Maluleke, this app serves as a platform for citizens to actively participate in shaping their city's future while enjoying a gamified experience.
 
 ## Features
 
@@ -39,11 +39,11 @@ Join DATACITY today and become an active participant in shaping the future of Ca
 
 ## Feedback and Support
 
-Have questions, suggestions, or need assistance? Contact our support team at [email] or visit our website [website] for more information.
+Have questions, suggestions, or need assistance? Contact our support team at shaqeelless@gmail.com or visit our website [website] for more information.
 
 ## About the Developer
 
-DATACITY was developed by [Your Name], a passionate advocate for civic engagement and community empowerment. Learn more about our mission and vision at [developer's website].
+DATACITY was developed by Shaqeel Less, Bafana Madume, Jason Blankenberg, Phindile Dhlamini and Kopano Maluleke, passionate advocates for civic engagement and community empowerment. Learn more about our mission and vision at [developer's website].
 
 ## License
 

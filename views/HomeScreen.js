@@ -28,6 +28,7 @@ const HomeScreen = ({ navigation }) => {
     // Add 10 points
     setPoints(points + 10);
     setCurrentPostIndex(currentPostIndex + 1);
+    setModalVisible(true); // Show the info modal when swiped right
   };
 
   const handleNope = (post) => {
@@ -75,9 +76,6 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.pointsContainer}>
         <Text style={styles.points}>Points: {points}</Text>
       </View>
-
-      {/* Button to open the modal */}
-      <Button title="Show Info" onPress={() => setModalVisible(true)} />
 
       {/* Modal Popup */}
       <Modal
@@ -159,3 +157,4 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+

@@ -1,13 +1,30 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Linking } from 'react-native';
 import Navbar from '../components/Navbar'; // Adjust the path as needed
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Import the MaterialCommunityIcons
 
 const LandingPage = ({ navigation }) => {
+  // Define an object with team members' names and their LinkedIn usernames or profile URLs
+  const teamMembers = [
+    { name: 'Phindile Dhlamini', linkedin: 'phindile-dhlamini' },
+    { name: 'Kopano Maluleke', linkedin: 'kopano-maluleke' },
+    { name: 'Safiyyah Slinger', linkedin: 'safiyyah-slinger' },
+    { name: 'Bafana', linkedin: 'bafana' },
+    { name: 'Shaqeel Less', linkedin: 'shaqeel-less' },
+  ];
+
+  // Function to open LinkedIn profile when a team member's name is pressed
+  const handleLinkedInPress = (linkedinUsername) => {
+    const linkedinURL = `https://www.linkedin.com/in/${linkedinUsername}`;
+    Linking.openURL(linkedinURL);
+  };
+
   return (
     <View style={styles.container}>
       {/* <Navbar navigation={navigation} /> */}
       <View style={styles.content}>
-        <Image source={{ uri: './views/icon.png' }} style={styles.logo} />
+        {/* Logo */}
+        <Image source={require('../assets/icon.png')} style={styles.logo} />
         <Text style={styles.title}>Welcome to Our App!</Text>
         <Text style={styles.description}>
           Discover how our app works and make the most out of it.
@@ -18,6 +35,26 @@ const LandingPage = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
+      </View>
+      {/* Meet the Team section */}
+      <View style={styles.teamSection}>
+        <Text style={styles.sectionTitle}>OUR TEAM</Text>
+        {/* Map over team members and render their names with LinkedIn icons */}
+        {teamMembers.map((member, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleLinkedInPress(member.linkedin)}
+            style={styles.teamMemberContainer}
+          >
+            <Text style={styles.teamMember}>{member.name}</Text>
+            <MaterialCommunityIcons
+              name="linkedin"
+              size={20}
+              color="#0077b5"
+              style={styles.linkedinIcon}
+            />
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
@@ -58,6 +95,31 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
+  },
+  teamSection: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    marginTop: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  teamMemberContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  teamMember: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  linkedinIcon: {
+    marginLeft: 'auto',
   },
 });
 
