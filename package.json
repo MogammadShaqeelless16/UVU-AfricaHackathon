@@ -31,7 +31,8 @@
     "react-native-screens": "^3.31.1",
     "react-native-swipe-cards": "^0.1.1",
     "react-native-web": "^0.19.11",
-    "react-native-webview": "^13.10.2"
+    "react-native-webview": "^13.10.2",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

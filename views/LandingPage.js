@@ -9,7 +9,7 @@ const LandingPage = ({ navigation }) => {
     { name: 'Phindile Dhlamini', linkedin: 'phindile-dhlamini' },
     { name: 'Kopano Maluleke', linkedin: 'kopano-maluleke' },
     { name: 'Safiyyah Slinger', linkedin: 'safiyyah-slinger' },
-    { name: 'Bafana', linkedin: 'bafana' },
+    { name: 'Bafana Madume', linkedin: 'bafana' },
     { name: 'Shaqeel Less', linkedin: 'shaqeel-less' },
   ];
 
