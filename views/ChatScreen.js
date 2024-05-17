@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Modal, Picker } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Navbar from '../components/Navbar';
 
@@ -9,14 +9,14 @@ const ChatScreen = ({ navigation }) => {
   const [commentInput, setCommentInput] = useState('');
   const [activeMessageId, setActiveMessageId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isComment, setIsComment] = useState(false);
-  const [attributeInput, setAttributeInput] = useState('');
+  const [selectedAttribute, setSelectedAttribute] = useState('');
+  const [locationInput, setLocationInput] = useState('');
 
   useEffect(() => {
     // Mock fetching initial messages
     setMessages([
-      { id: '1', text: 'Hello!', sender: 'Alice', likes: 0, comments: [], attributes: ['Construction'], timestamp: new Date().toISOString() },
-      { id: '2', text: 'Hi there!', sender: 'Bob', likes: 0, comments: [], attributes: ['Law bills'], timestamp: new Date().toISOString() },
+      { id: '1', text: 'New building in 15 salt street', sender: 'Jason', likes: 0, comments: [], attributes: ['Construction'], location: 'salt river', timestamp: new Date().toISOString() },
+      { id: '2', text: 'speedhumps on the N2', sender: 'Kopano', likes: 0, comments: [], attributes: ['Law bills'], location: 'observatory', timestamp: new Date().toISOString() },
     ]);
   }, []);
 
@@ -28,28 +28,34 @@ const ChatScreen = ({ navigation }) => {
         sender: 'You',
         likes: 0,
         comments: [],
-        attributes: attributeInput.trim() ? attributeInput.trim().split(',') : [],
+        attributes: selectedAttribute !== '' ? [selectedAttribute] : [],
+        location: locationInput,
         timestamp: new Date().toISOString(),
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInput('');
-      setAttributeInput('');
+      setSelectedAttribute('');
+      setLocationInput('');
       setModalVisible(false);
     }
   };
 
-  const sendComment = (messageId) => {
-    if (commentInput.trim()) {
-      setMessages((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === messageId
-            ? { ...message, comments: [...message.comments, { text: commentInput, sender: 'You' }] }
-            : message
-        )
-      );
-      setCommentInput('');
+  const sendComment = (messageId, commentText) => {
+    if (commentText.trim()) {
+      const newComment = { text: commentText };
+      addCommentToMessage(messageId, newComment);
       setActiveMessageId(null);
     }
+  };
+
+  const addCommentToMessage = (messageId, newComment) => {
+    setMessages((prevMessages) =>
+      prevMessages.map((message) =>
+        message.id === messageId
+          ? { ...message, comments: [...message.comments, newComment] }
+          : message
+      )
+    );
   };
 
   const likeMessage = (messageId) => {
@@ -68,7 +74,7 @@ const ChatScreen = ({ navigation }) => {
         placeholder="Type a comment"
         style={styles.commentInput}
       />
-      <TouchableOpacity onPress={() => sendComment(messageId)} style={styles.sendButton}>
+      <TouchableOpacity onPress={() => sendComment(messageId, commentInput)} style={styles.sendButton}>
         <Icon name="send" size={24} color="#000" />
       </TouchableOpacity>
     </View>
@@ -81,12 +87,17 @@ const ChatScreen = ({ navigation }) => {
         <Text style={styles.timestamp}>{formatDate(item.timestamp)}</Text>
       </View>
       <Text style={styles.text}>{item.text}</Text>
-      <Text style={styles.attributes}>Attributes: {item.attributes.join(', ')}</Text>
+      {item.location !== '' && (
+        <Text style={styles.location}>Location: {item.location}</Text>
+      )}
+      {item.attributes.length > 0 && (
+        <Text style={styles.attributes}>Attributes: {item.attributes.join(', ')}</Text>
+      )}
       <View style={styles.messageActions}>
         <TouchableOpacity onPress={() => likeMessage(item.id)} style={styles.likeButton}>
           <Text>👍 ({item.likes})</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { setActiveMessageId(item.id); setIsComment(true); setModalVisible(true); }} style={styles.commentButton}>
+        <TouchableOpacity onPress={() => { setActiveMessageId(item.id); setModalVisible(true); }} style={styles.commentButton}>
           <Icon name="comment" size={24} color="#000" />
         </TouchableOpacity>
       </View>
@@ -94,7 +105,6 @@ const ChatScreen = ({ navigation }) => {
         <View style={styles.comments}>
           {item.comments.map((comment, index) => (
             <View key={index} style={styles.comment}>
-              <Text style={styles.sender}>{comment.sender}</Text>
               <Text style={styles.text}>{comment.text}</Text>
             </View>
           ))}
@@ -118,6 +128,7 @@ const ChatScreen = ({ navigation }) => {
         onPress={() => setModalVisible(true)}
       >
         <Icon name="add" size={30} color="#fff" />
+        <Text style={styles.newChatText}>New Chat</Text>
       </TouchableOpacity>
       <Modal
         visible={modalVisible}
@@ -133,10 +144,20 @@ const ChatScreen = ({ navigation }) => {
               placeholder="Type a message"
               style={styles.modalInput}
             />
+            <Picker
+              selectedValue={selectedAttribute}
+              onValueChange={(itemValue) => setSelectedAttribute(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Select Attribute" value="" />
+              <Picker.Item label="Construction" value="Construction" />
+              <Picker.Item label="Health" value="Health" />
+              {/* Add more attributes as needed */}
+            </Picker>
             <TextInput
-              value={attributeInput}
-              onChangeText={setAttributeInput}
-              placeholder="Type attributes (comma-separated)"
+              value={locationInput}
+              onChangeText={setLocationInput}
+              placeholder="Type a location"
               style={styles.modalInput}
             />
             <TouchableOpacity
@@ -198,6 +219,10 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     marginVertical: 5,
   },
+  location: {
+    color: '#777',
+    fontStyle: 'italic',
+  },
   attributes: {
     color: '#777',
     fontStyle: 'italic',
@@ -232,11 +257,12 @@ const styles = StyleSheet.create({
     right: 20,
     backgroundColor: '#007bff',
     borderRadius: 30,
-    width: 60,
+    width: 100,
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
+    flexDirection: 'row',
   },
   modalContainer: {
     flex: 1,
@@ -280,7 +306,23 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight: 10,
   },
+  picker: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    width: '100%',
+    marginBottom: 10,
+  },
+  newChatText: {
+    color: '#fff',
+    marginLeft: 10,
+  },
 });
 
 export default ChatScreen;
 
+   
+
+
+  
