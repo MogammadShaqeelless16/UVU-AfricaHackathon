@@ -1,3 +1,3 @@
 [build]
-  command = "npx expo export"
+  command = "npx expo export --platform web"
   publish = "dist"
