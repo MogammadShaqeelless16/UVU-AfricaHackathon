@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
@@ -23,18 +23,14 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const handleYup = (post) => {
-    // Handle "yes" swipe action
     console.log("Yes:", post.title.rendered);
-    // Add 10 points
-    setPoints(points + 10);
-    // Move to the next post
+        // Add 10 points
+        setPoints(points + 10);
     setCurrentPostIndex(currentPostIndex + 1);
   };
 
   const handleNope = (post) => {
-    // Handle "no" swipe action
     console.log("No:", post.title.rendered);
-    // Move to the next post
     setCurrentPostIndex(currentPostIndex + 1);
   };
 
@@ -71,7 +67,27 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.pointsContainer}>
         <Text style={styles.points}>Points: {points}</Text>
       </View>
-    </ImageBackground>
+
+      {/* Button to open the modal */}
+      <Button title="Show Info" onPress={() => setModalVisible(true)} />
+
+      {/* Modal Popup */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>This is the information popup!</Text>
+            <Button title="Close" onPress={() => setModalVisible(false)} />
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
