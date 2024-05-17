@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Navbar from '../components/Navbar';
-const ChatScreen = () => {
+
+const ChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [commentInput, setCommentInput] = useState('');
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#0FB5CE', // Change the background color here
   },
   messageList: {
     flex: 1,
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
   comments: {
     marginTop: 10,
     paddingLeft: 10,
-    borderLeftWidth: 2    ,
+    borderLeftWidth: 2,
     borderLeftColor: '#ccc',
   },
   comment: {
@@ -282,3 +283,4 @@ const styles = StyleSheet.create({
 });
 
 export default ChatScreen;
+

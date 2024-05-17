@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const [points, setPoints] = useState(50); // Initial points set to 50
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -24,6 +25,8 @@ const HomeScreen = () => {
   const handleYup = (post) => {
     // Handle "yes" swipe action
     console.log("Yes:", post.title.rendered);
+    // Add 10 points
+    setPoints(points + 10);
     // Move to the next post
     setCurrentPostIndex(currentPostIndex + 1);
   };
@@ -36,7 +39,10 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground 
+      source={require('../assets/city centre.jpg')} // Local image path
+      style={styles.backgroundImage}
+    >
       <Navbar navigation={navigation} />
       <View style={styles.swipeCardsContainer}>
         <SwipeCards
@@ -48,12 +54,10 @@ const HomeScreen = () => {
             >
               <Text style={styles.title}>{post.title.rendered}</Text>
               {post.featured_media && (
-                <a href={post.link} target="_blank" rel="noopener noreferrer">
-                  <Image
-                    source={{ uri: post.featured_media.source_url }}
-                    style={styles.image}
-                  />
-                </a>
+                <Image
+                  source={{ uri: post.featured_media.source_url }}
+                  style={styles.image}
+                />
               )}
             </TouchableOpacity>
           )}
@@ -65,19 +69,22 @@ const HomeScreen = () => {
         />
       </View>
       <View style={styles.pointsContainer}>
-        <Text style={styles.points}>Points: 50</Text>
+        <Text style={styles.points}>Points: {points}</Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#0fb5ce',
+    width: '100%',
+    height: '100%',
   },
   swipeCardsContainer: {
     flex: 1,
+    alignItems: 'center', // Ensure cards are centered
+    justifyContent: 'center', // Ensure cards are centered
   },
   card: {
     backgroundColor: '#fff',
@@ -103,8 +110,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   points: {
-    fontSize: 16,
-    color: '#555', // Adjust the color as needed
+    fontSize: 18,
+    color: '#fff', // Set points color to white
+    fontWeight: 'bold',
+    fontFamily: 'CustomFont', // Use the custom font
   },
 });
 
