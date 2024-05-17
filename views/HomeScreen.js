@@ -93,6 +93,7 @@ const HomeScreen = ({ navigation }) => {
                   />
                 )}
                 <Text style={styles.title}>{post.title.rendered}</Text>
+                <Text style={styles.content}>{post.excerpt.rendered}</Text>
               </TouchableOpacity>
             );
           }}
@@ -132,6 +133,7 @@ const HomeScreen = ({ navigation }) => {
               </View>
             )}
             <Button title="Close" onPress={() => setModalVisible(false)} />
+            <Button title="Comment" onPress={() => setModalVisible(false)} />
           </View>
         </View>
       </Modal>
@@ -146,7 +148,6 @@ const HomeScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -225,6 +226,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalContent: {
+    fontSize: 18,
+    marginBottom: 20,
+    color: '#333', // Set the color of the modal content text
   },
 });
 
