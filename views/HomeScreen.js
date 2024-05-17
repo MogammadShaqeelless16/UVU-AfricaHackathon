@@ -9,6 +9,7 @@ const HomeScreen = ({ navigation }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [points, setPoints] = useState(50); // Initial points set to 50
   const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
+  const [selectedPost, setSelectedPost] = useState(null); // Selected post for modal content
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,6 +29,7 @@ const HomeScreen = ({ navigation }) => {
     // Add 10 points
     setPoints(points + 10);
     setCurrentPostIndex(currentPostIndex + 1);
+    setSelectedPost(post); // Set the selected post for modal content
     setModalVisible(true); // Show the info modal when swiped right
   };
 
@@ -88,7 +90,12 @@ const HomeScreen = ({ navigation }) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>This is the information popup!</Text>
+            {selectedPost && (
+              <View>
+                <Text style={styles.modalTitle}>{selectedPost.title.rendered}</Text>
+                <Text style={styles.modalContent} dangerouslySetInnerHTML={{ __html: selectedPost.content.rendered }}></Text>
+              </View>
+            )}
             <Button title="Close" onPress={() => setModalVisible(false)} />
           </View>
         </View>
@@ -96,6 +103,7 @@ const HomeScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   backgroundImage: {
