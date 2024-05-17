@@ -54,28 +54,52 @@ const MapScreen = ({ navigation }) => {
         view.setCenter(fromLonLat([longitude, latitude]));
         view.setZoom(15); // Zoom to street level
 
-        // Add marker for user's location
-        const marker = new Feature({
+        // Add marker for user's location (red)
+        const userMarker = new Feature({
           geometry: new Point(fromLonLat([longitude, latitude])),
         });
 
-        const markerStyle = new Style({
+        const userMarkerStyle = new Style({
           image: new Icon({
-            // No need for require here, just specify the icon name
             src: '', // No need for asset
             scale: 0.05, // Adjust scale of marker icon
+            color: 'red', // Marker color
           }),
         });
 
-        marker.setStyle(markerStyle);
+        userMarker.setStyle(userMarkerStyle);
 
-        const vectorLayer = new VectorLayer({
+        const userVectorLayer = new VectorLayer({
           source: new VectorSource({
-            features: [marker],
+            features: [userMarker],
           }),
         });
 
-        map.addLayer(vectorLayer);
+        map.addLayer(userVectorLayer);
+
+        // Add marker at provided coordinates (green)
+        const greenCoordinates = [10, 20]; // Example coordinates
+        const greenMarker = new Feature({
+          geometry: new Point(fromLonLat(greenCoordinates)),
+        });
+
+        const greenMarkerStyle = new Style({
+          image: new Icon({
+            src: '', // No need for asset
+            scale: 0.05, // Adjust scale of marker icon
+            color: 'green', // Marker color
+          }),
+        });
+
+        greenMarker.setStyle(greenMarkerStyle);
+
+        const greenVectorLayer = new VectorLayer({
+          source: new VectorSource({
+            features: [greenMarker],
+          }),
+        });
+
+        map.addLayer(greenVectorLayer);
       },
       (error) => {
         console.error('Error getting user location:', error);
