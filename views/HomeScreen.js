@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,16 +23,12 @@ const HomeScreen = () => {
   }, []);
 
   const handleYup = (post) => {
-    // Handle "yes" swipe action
     console.log("Yes:", post.title.rendered);
-    // Move to the next post
     setCurrentPostIndex(currentPostIndex + 1);
   };
 
   const handleNope = (post) => {
-    // Handle "no" swipe action
     console.log("No:", post.title.rendered);
-    // Move to the next post
     setCurrentPostIndex(currentPostIndex + 1);
   };
 
@@ -67,6 +64,26 @@ const HomeScreen = () => {
       <View style={styles.pointsContainer}>
         <Text style={styles.points}>Points: 50</Text>
       </View>
+
+      {/* Button to open the modal */}
+      <Button title="Show Info" onPress={() => setModalVisible(true)} />
+
+      {/* Modal Popup */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>This is the information popup!</Text>
+            <Button title="Close" onPress={() => setModalVisible(false)} />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -104,7 +121,32 @@ const styles = StyleSheet.create({
   },
   points: {
     fontSize: 16,
-    color: '#555', // Adjust the color as needed
+    color: '#555',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 15,
   },
 });
 
