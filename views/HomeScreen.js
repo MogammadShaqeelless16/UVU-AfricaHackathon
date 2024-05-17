@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button, ImageBackground } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
@@ -8,6 +8,7 @@ const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [points, setPoints] = useState(50); // Initial points set to 50
+  const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -24,8 +25,8 @@ const HomeScreen = ({ navigation }) => {
 
   const handleYup = (post) => {
     console.log("Yes:", post.title.rendered);
-        // Add 10 points
-        setPoints(points + 10);
+    // Add 10 points
+    setPoints(points + 10);
     setCurrentPostIndex(currentPostIndex + 1);
   };
 
@@ -35,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground 
+    <ImageBackground
       source={require('../assets/city centre.jpg')} // Local image path
       style={styles.backgroundImage}
     >
@@ -87,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -130,6 +131,23 @@ const styles = StyleSheet.create({
     color: '#fff', // Set points color to white
     fontWeight: 'bold',
     fontFamily: 'CustomFont', // Use the custom font
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalView: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
   },
 });
 
