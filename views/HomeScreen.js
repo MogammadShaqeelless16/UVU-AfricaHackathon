@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal, Button, ImageBackground } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import Navbar from '../components/Navbar';
@@ -44,20 +44,27 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.swipeCardsContainer}>
         <SwipeCards
           cards={posts}
-          renderCard={(post) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => navigation.navigate('PostDetails', { postId: post.id })}
-            >
-              <Text style={styles.title}>{post.title.rendered}</Text>
-              {post.featured_media && (
-                <Image
-                  source={{ uri: post.featured_media.source_url }}
-                  style={styles.image}
-                />
-              )}
-            </TouchableOpacity>
-          )}
+          renderCard={(post) => {
+            // Extract the image URL from the post content
+            const regex = /<img.*?src=['"](.*?)['"]/;
+            const match = regex.exec(post.content.rendered);
+            const imageUrl = match ? match[1] : null;
+
+            return (
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => navigation.navigate('PostDetails', { postId: post.id })}
+              >
+                {imageUrl && (
+                  <Image
+                    source={{ uri: imageUrl }}
+                    style={styles.image}
+                  />
+                )}
+                <Text style={styles.title}>{post.title.rendered}</Text>
+              </TouchableOpacity>
+            );
+          }}
           handleYup={handleYup}
           handleNope={handleNope}
           cardRemoved={() => {}}
