@@ -39,7 +39,7 @@ Join DATACITY today and become an active participant in shaping the future of Ca
 
 ## Feedback and Support
 
-Have questions, suggestions, or need assistance? Contact our support team at [email] or visit our website [website] for more information.
+Have questions, suggestions, or need assistance? Contact our support team at shaqeelless@gmail.com or visit our website [website] for more information.
 
 ## About the Developer
 
