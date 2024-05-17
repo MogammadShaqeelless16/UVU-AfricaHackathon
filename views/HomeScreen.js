@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, Button, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal, Button, ImageBackground } from 'react-native';
 import axios from 'axios';
 import SwipeCards from 'react-native-swipe-cards';
 import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome
@@ -12,6 +12,7 @@ const HomeScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
   const [arrowsVisible, setArrowsVisible] = useState(true); // State for arrow visibility
   const [selectedPost, setSelectedPost] = useState(null); // Selected post for modal content
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -63,7 +64,6 @@ const HomeScreen = ({ navigation }) => {
       style={styles.backgroundImage}
     >
       <Navbar navigation={navigation} />
-      {/* <Text style={styles.swipeMe}>Swipe Me</Text> */}
       <View style={styles.swipeCardsContainer}>
         {/* Left Arrow */}
         {arrowsVisible && (
@@ -101,8 +101,6 @@ const HomeScreen = ({ navigation }) => {
           cardRemoved={handleSwipeComplete}
           stack={false}
           loop={false}
-          // Add key props for re-rendering when currentIndex changes
-          key={currentPostIndex}
         />
 
         {/* Right Arrow */}
@@ -137,23 +135,23 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+
+      {/* Navigate to Shop Button */}
+      <TouchableOpacity
+        style={styles.shopButton}
+        onPress={() => navigation.navigate('Shop')}
+      >
+        <FontAwesome name="shopping-cart" size={30} color="#fff" />
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
-
 
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
-  },
-  swipeMe: {
-    fontSize: 24,
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 50, // Adjust the marginTop value to move the text further down
-    fontWeight: 'bold', // Make the text bold
   },
   swipeCardsContainer: {
     flex: 1,
@@ -218,8 +216,16 @@ const styles = StyleSheet.create({
     top: '50%',
     transform: [{ translateY: -20 }], // Adjust the icon position vertically
   },
+  shopButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#000', // Adjust button background color as needed
+    padding: 10,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default HomeScreen;
-
-
