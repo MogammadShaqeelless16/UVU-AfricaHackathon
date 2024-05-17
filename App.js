@@ -8,6 +8,8 @@ import MapScreen from './views/MapScreen';
 import SplashScreen from './views/SplashScreen'; // Import the SplashScreen component
 import ChatScreen from './views/ChatScreen';
 import LandingPage from './views/LandingPage';
+import LoginScreen from './views/LoginScreen';
+import SignupScreen from './views/SignupScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,8 @@ const App = () => {
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
       ) : (
         <SplashScreen />
